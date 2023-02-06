@@ -28,13 +28,22 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-4 py-12 flex min-h-screen flex-col items-center bg-gradient-to-b">
+      <main className="px-4 py-4 flex min-h-screen flex-col items-center bg-gradient-to-b">
         <div className="c-background -z-10">
           <div className="absolute top-0 left-0 w-full h-1/3 bg-yellow-400 -z-1"></div>
           <div className="absolute top-1/3 left-0 w-full h-2/3 bg-white"></div>
         </div>
         
-        <h1 className="text-5xl font-bold text-white mt-12">I have a great idea...</h1>
+        <header className="min-h-12 w-full mb-12 flex justify-around items-center">
+          <div className="text-left left w-1/3"></div>
+          <h1 className="text-center flex-1 text-xl text-white font-extrabold">Idea Hub</h1>
+
+          <div className="text-right w-1/3">
+            <AuthButton />
+          </div>
+        </header>
+
+        <h1 className="text-4xl font-bold text-white">I have a great idea...</h1>
 
         <div className="w-full my-12">
           <textarea
@@ -58,7 +67,7 @@ const Home: NextPage = () => {
 
 export default Home;
 
-const AuthShowcase: React.FC = () => {
+const AuthButton: React.FC = () => {
   const { data: sessionData } = useSession();
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
@@ -67,13 +76,9 @@ const AuthShowcase: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
+    <div className="">
       <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        className="rounded-full bg-white/10 px-4 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}
